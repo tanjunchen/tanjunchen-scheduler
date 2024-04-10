@@ -50,7 +50,7 @@ spec:
           name: scheduler-config
       containers:
       - name: scheduler-ctrl
-        image: docker.io/tanjunchen:tanjunchen-1.24.4
+        image: registry.baidubce.com/csm-offline/kube-scheduler-amd64:tanjunchen-1.24.4
         imagePullPolicy: Always
         args:
         - tanjunchen-scheduler
@@ -71,11 +71,8 @@ rules:
 - apiGroups:
   - ""
   - events.k8s.io
-    resources:
-    resources:
-      - endpoints
   resources:
-      - endpoints
+  - endpoints
   - events
   verbs:
   - create
