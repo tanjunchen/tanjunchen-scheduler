@@ -2,7 +2,7 @@
 
 This repo is a sample for Kubernetes scheduler framework. The `sample` plugin implements `filter` and `prebind` extension points.
 
-And the custom scheduler name is `tanjunchen-framework` which defines in `KubeSchedulerConfiguration` object.
+And the custom scheduler name is `tanjunchen-scheduler` which defines in `KubeSchedulerConfiguration` object.
 
 ## Build
 
