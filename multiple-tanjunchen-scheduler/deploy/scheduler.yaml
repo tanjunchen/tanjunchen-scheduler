@@ -262,7 +262,7 @@ spec:
             name: tanjunchen-scheduler-config
       containers:
         - name: scheduler-ctrl
-          image: registry.baidubce.com/csm-offline/kube-scheduler-amd64-out-of-tree:multiple-v1.26.9-scheduler
+          image: docker.io/tanjunchen/kube-scheduler-amd64-out-of-tree:multiple-v1.26.9-scheduler
           imagePullPolicy: Always
           args:
             - tanjunchen-scheduler
