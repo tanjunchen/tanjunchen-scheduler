@@ -9,7 +9,7 @@ clientConnection:
   kubeconfig: /etc/kubernetes/scheduler.conf
   qps: 100
 profiles:
-- schedulerName: default-scheduler
+- schedulerName: tanjunchen-scheduler
   plugins:
     filter:
       enabled:

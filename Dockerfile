@@ -4,4 +4,4 @@ WORKDIR /
 
 COPY _output/bin/tanjunchen-scheduler /usr/local/bin
 
-CMD ["tanjunchen-scheduler"]
+CMD ["/usr/local/bin/tanjunchen-scheduler"]
