@@ -1,7 +1,7 @@
 BIN_DIR=_output/bin
 
 # If tag not explicitly set in users default to the git sha.
-TAG ?= v1.0
+TAG ?= v1.26.9-scheduler
 
 .EXPORT_ALL_VARIABLES:
 
