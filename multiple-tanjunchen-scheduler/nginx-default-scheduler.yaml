@@ -12,7 +12,7 @@ spec:
       labels:
         app: nginx
     spec:
-     #schedulerName: tanjunchen-scheduler
+      #schedulerName: default-scheduler
       containers:
         - name: nginx
           image: nginx:1.17.3
