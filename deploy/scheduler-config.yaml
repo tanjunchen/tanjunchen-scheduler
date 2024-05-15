@@ -7,11 +7,16 @@ clientConnection:
 profiles:
   - schedulerName: default-scheduler
     plugins:
+      multiPoint:
+        enabled:
+        - name: Example
+          weight: 0
       filter:
         enabled:
-          - name: dynamic
+          - name: Dynamic
+            weight: 100
     pluginConfig:
-      - name: dynamic
+      - name: Dynamic
         args:
-          toleranceCPURate: 80
-          toleranceMemoryRate: 80
+          toleranceCPURate: 50
+          toleranceMemoryRate: 50

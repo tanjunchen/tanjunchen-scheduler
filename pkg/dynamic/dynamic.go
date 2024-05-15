@@ -9,9 +9,8 @@ import (
 	"k8s.io/kubernetes/pkg/scheduler/framework"
 
 	config "github.com/tanjunchen/tanjunchen-scheduler/apis/config"
+	"github.com/tanjunchen/tanjunchen-scheduler/pkg/names"
 )
-
-const DynamicName = "dynamic"
 
 var _ framework.FilterPlugin = &DynamicPlugin{}
 
@@ -49,13 +48,16 @@ func (dp *DynamicPlugin) Filter(ctx context.Context, state *framework.CycleState
 	nodeName := node.Name
 	nodesStat := dp.NodeCache.GetNodeInfo(nodeName, pod)
 
-	fmt.Printf("nodesStat: %+v\n", nodesStat)
+	fmt.Printf("node name: %s, node real cpu: %f, node request cpu: %f, node real memory: %f, node request memory %f\n",
+		nodesStat.NodeName, nodesStat.RealCPURate, nodesStat.RequestCPURate, nodesStat.RealMemoryRate, nodesStat.RequestMemoryRate)
 
 	if nodesStat.RealCPURate > dp.DynamicArgs.ToleranceCPURate {
+		fmt.Printf("node name: %s, node real cpu rate > %v\n", nodesStat.NodeName, dp.DynamicArgs.ToleranceCPURate)
 		return framework.NewStatus(framework.Unschedulable, fmt.Sprintf("Real cpu rate > %v", dp.DynamicArgs.ToleranceCPURate))
 	}
 
 	if nodesStat.RealMemoryRate > dp.DynamicArgs.ToleranceMemoryRate {
+		fmt.Printf("node name: %s, node real memory rate > %v\n", nodesStat.NodeName, dp.DynamicArgs.ToleranceMemoryRate)
 		return framework.NewStatus(framework.Unschedulable, fmt.Sprintf("Real memory rate > %v", dp.DynamicArgs.ToleranceMemoryRate))
 	}
 
@@ -63,5 +65,5 @@ func (dp *DynamicPlugin) Filter(ctx context.Context, state *framework.CycleState
 }
 
 func (dp *DynamicPlugin) Name() string {
-	return DynamicName
+	return names.DynamicName
 }

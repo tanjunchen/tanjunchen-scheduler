@@ -7,13 +7,10 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/klog/v2"
 	"k8s.io/kubernetes/pkg/scheduler/framework"
+
+	"github.com/tanjunchen/tanjunchen-scheduler/pkg/names"
 )
 
-const ExampledName = "example"
-
-var _ framework.ReservePlugin = &ExamplePlugin{}
-var _ framework.PreBindPlugin = &ExamplePlugin{}
-var _ framework.PreFilterPlugin = &ExamplePlugin{}
 var _ framework.FilterPlugin = &ExamplePlugin{}
 
 type ExamplePlugin struct{}
@@ -23,11 +20,6 @@ func NewExamplePlugin(_ runtime.Object, _ framework.Handle) (framework.Plugin, e
 	return &ExamplePlugin{}, nil
 }
 
-func (e *ExamplePlugin) PreFilter(ctx context.Context, state *framework.CycleState, pod *v1.Pod) (*framework.PreFilterResult, *framework.Status) {
-	klog.InfoS("tanjunchen-scheduler PreFilter", "pod_name", pod.Name)
-	return nil, framework.NewStatus(framework.Success, "")
-}
-
 func (e *ExamplePlugin) Filter(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodeInfo *framework.NodeInfo) *framework.Status {
 	cpu := nodeInfo.Allocatable.MilliCPU
 	memory := nodeInfo.Allocatable.Memory
@@ -35,32 +27,8 @@ func (e *ExamplePlugin) Filter(ctx context.Context, state *framework.CycleState,
 	return framework.NewStatus(framework.Success, "")
 }
 
-func (e *ExamplePlugin) PreFilterExtensions() framework.PreFilterExtensions {
-	return nil
-}
-
-func (e *ExamplePlugin) PreBind(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodeName string) *framework.Status {
-	if pod == nil {
-		return framework.NewStatus(framework.Error, "pod cannot be nil")
-	}
-	klog.InfoS("tanjunchen-scheduler PreBind", "pod_name", pod.Name, "current node", nodeName)
-	return nil
-}
-
-func (e *ExamplePlugin) Reserve(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodeName string) *framework.Status {
-	if pod == nil {
-		return framework.NewStatus(framework.Error, "pod cannot be nil")
-	}
-	klog.InfoS("tanjunchen-scheduler Reserve", "pod_name", pod.Name, "current node", nodeName)
-	return nil
-}
-
-func (e *ExamplePlugin) Unreserve(ctx context.Context, state *framework.CycleState, pod *v1.Pod, nodeName string) {
-	klog.InfoS("tanjunchen-scheduler Unreserve", "pod_name", pod.Name, "current node", nodeName)
-}
-
 func (e *ExamplePlugin) Name() string {
-	return ExampledName
+	return names.ExampleName
 }
 
 type exampleStateData struct {

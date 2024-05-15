@@ -27,6 +27,7 @@ import (
 	_ "github.com/tanjunchen/tanjunchen-scheduler/apis/config/scheme"
 	"github.com/tanjunchen/tanjunchen-scheduler/pkg/dynamic"
 	"github.com/tanjunchen/tanjunchen-scheduler/pkg/example"
+	"github.com/tanjunchen/tanjunchen-scheduler/pkg/names"
 )
 
 func main() {
@@ -34,8 +35,8 @@ func main() {
 	// Later they can consist of scheduler profile(s) and hence
 	// used by various kinds of workloads.
 	command := app.NewSchedulerCommand(
-		app.WithPlugin(dynamic.DynamicName, dynamic.NewDynamicPlugin),
-		app.WithPlugin(example.ExampledName, example.NewExamplePlugin),
+		app.WithPlugin(names.DynamicName, dynamic.NewDynamicPlugin),
+		app.WithPlugin(names.ExampleName, example.NewExamplePlugin),
 	)
 
 	code := cli.Run(command)
